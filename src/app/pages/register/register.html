@@ -1,0 +1,116 @@
+<section class="bg-white text-danger mt-5 w-50 mx-auto rounded-3 shadow px-4 py-3 text-capitalize">
+    <h4 class="text-danger fw-semibold mb-3">register now</h4>
+    <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()">
+        <div class="mb-3">
+            <!-- <label for="name" class="form-label">name</label> -->
+            <input placeholder="UserName" formControlName="name" type="text" class="form-control" id="name" >
+            @if(registerForm.get('name')?.errors && registerForm.get('name')?.touched){
+                <div class="alert mt-2 border-0 py-1 alert-danger d-flex align-items-center" role="alert">
+                <ul class="my-0">
+                    @if(registerForm.get('name')?.getError('required')){
+                        <li>name is required</li>
+                    }
+                    
+                    @else if(registerForm.get('name')?.getError('minlength'))
+                    {
+                        <li>name should be more than or equal 3 chars</li>
+                    }
+                    @else if(registerForm.get('name')?.getError('maxlength'))
+                    {
+                        <li>name should be les than or equal 20 char</li>
+                    }
+                    
+                </ul>
+            </div>
+            }
+            
+        </div>
+        <div class="mb-3">
+            <!-- <label for="email" class="form-label">email</label> -->
+            <input placeholder="Email Address" formControlName="email" type="email" class="form-control" id="email" >
+            @if(registerForm.get('email')?.errors && registerForm.get('email')?.touched){
+                <div class="alert mt-2 border-0 py-1 alert-danger d-flex align-items-center" role="alert">
+                <ul class="my-0">
+                    @if(registerForm.get('email')?.getError('required')){
+                       <li>email is required</li> 
+                    }
+                    @else if(registerForm.get('email')?.getError('email')){
+                        <li>enter valid email</li>
+                    }
+                </ul>
+            </div>
+            }
+        </div>
+        <div class="mb-3">
+            <!-- <label for="password" class="form-label">password</label> -->
+            <input placeholder="Password" formControlName="password" type="password" class="form-control" id="password" >
+            @if(registerForm.get('password')?.errors && registerForm.get('password')?.touched){
+            <div class="alert mt-2 border-0 py-1 alert-danger d-flex align-items-center" role="alert">
+                <ul class="my-0">
+                    @if(registerForm.get('password')?.getError('required')){
+                        <li>password is required</li>
+                    }
+                    @else if (registerForm.get('password')?.getError('pattern')) {
+                        <li>password must be start with uppercase then from 6 to more any word chars.</li>   
+                    }
+                    
+                </ul>
+            </div>
+        }
+        </div>
+        <div class="mb-3">
+            <!-- <label for="age" class="form-label">age</label> -->
+            <input placeholder="User Age" formControlName="age" type="number" class="form-control" id="age" >
+            @if(registerForm.get('age')?.errors && registerForm.get('age')?.touched){
+                <div class="alert mt-2 border-0 py-1 alert-danger d-flex align-items-center" role="alert">
+                <ul class="my-0">
+                    @if(registerForm.get('age')?.getError('required')){
+                       <li>age is required</li> 
+                    }
+                    @else if (registerForm.get('age')?.getError('pattern')) {
+                      <li>invalid age! please enter age between 10 and 80</li>  
+                    }
+                    
+                </ul>
+            </div>
+            }
+            
+        </div>
+        <div class="mb-3">
+            <!-- <label for="phone" class="form-label">phone</label> -->
+            <input placeholder="Phone Number" formControlName="phone" type="tel" class="form-control" id="phone" >
+            @if(registerForm.get('phone')?.errors && registerForm.get('phone')?.touched){
+                <div class="alert mt-2 border-0 py-1 alert-danger d-flex align-items-center" role="alert">
+                <ul class="my-0">
+                    @if(registerForm.get('phone')?.getError('required')){
+                      <li>phone is required</li>
+                    }
+                    @else if (registerForm.get('phone')?.getError('pattern')) {
+                     <li>phone must be only egyption number</li>
+                    }
+                    
+                </ul>
+            </div>
+            }
+        </div>
+        <button [disabled]="isLoading" type="submit" class="btn btn-danger">
+            @if(isLoading){
+                <i class="fa-solid fa-spinner"></i>
+            }
+             sign up</button>
+
+        @if(successMSG){
+        <div class="alert alert-success mt-3" role="alert">
+            {{successMSG}}
+        </div>
+        }
+
+        @if(errorMSG){
+        <div class="alert alert-danger mt-3" role="alert">
+           {{errorMSG}}
+        </div>
+        }
+    </form>
+</section>
+<p class="w-50 mx-auto text-capitalize mt-2 text-muted  fs-6">already have an account? 
+    <a routerLink="/login" class="fw-medium">log in</a></p>

@@ -1,0 +1,112 @@
+<section class="container py-5">
+  <p class="text-muted text-capitalize fw-medium alert alert-secondary">hello, you are now on the home page where you can add your notes with the ability to edit and delete them as well!</p>
+    <div class="d-flex align-items-center justify-content-between mb-4">
+    <input [(ngModel)]="word" type="search" placeholder="Search..." class="form-control w-75 "/>
+    <button type="button" class="px-4 btn btn-danger text-white text-capitalize" data-bs-toggle="modal" data-bs-target="#addModal" data-bs-whatever="@mdo">add note</button>
+    </div>
+    <!-- card to display all notes -->
+     <div class="row gy-3">
+      @for (note of notesData | search : word; track note._id) {
+     <div class="card border-0 col-lg-4">
+      <div class="card-header bg-danger text-white">
+        Note
+      </div>
+      <div class="card-body border border-danger-subtle">
+        <figure>
+          <blockquote class="blockquote ">
+            <p class="fs-5 text-uppercase "> {{note.title}} </p>
+          </blockquote>
+          <figcaption class="blockquote-footer fs-6 text-capitalize">
+            <cite title="Source Title"> {{note.content}} </cite>
+          </figcaption>
+        </figure>
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button (click)="setEditNoteForm(note._id,note)" type="button" class="btn btn-outline-danger text-uppercase" data-bs-toggle="modal" data-bs-target="#editModal"
+            data-bs-whatever="@mdo">edit <i class="fa-solid fa-pen-to-square"></i></button>
+            <button type="button" class="btn btn-outline-danger text-uppercase" data-bs-toggle="modal"
+              data-bs-target="#deleteModal" (click)="deleteUserNote(note._id)">
+              trash <i class="fa-regular fa-trash-can"></i>
+            </button>
+      </div>
+    </div>
+     </div>
+   }
+     </div>
+  
+
+    <!-- modal to add note -->
+  <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-capitalize " id="addModalLabel"> add new note</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="addNotesForm" (ngSubmit)="submitAddNoteForm()">
+          <div class="mb-3">
+            <label for="title" class="col-form-label text-capitalize">title:</label>
+            <input formControlName="title" type="text" class="form-control" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="content" class="col-form-label text-capitalize">content:</label>
+            <textarea formControlName="content" class="form-control" id="content"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="submit" class="btn text-start  btn-danger text-white text-capitalize" data-bs-dismiss="modal">add</button>
+      </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+    </div>
+
+
+    <!-- modal to edit note -->
+  <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-capitalize " id="editModalLabel"> edit your note</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="editNotesForm" (ngSubmit)="submitEditNoteForm()">
+          <div class="mb-3">
+            <label for="title" class="col-form-label text-capitalize">title:</label>
+            <input formControlName="title" type="text" class="form-control" id="title">
+          </div>
+          <div class="mb-3">
+            <label for="content" class="col-form-label text-capitalize">content:</label>
+            <textarea formControlName="content" class="form-control" id="content"></textarea>
+          </div>
+          <div class="modal-footer">
+        <button type="submit" class="btn text-start  btn-danger text-white text-capitalize" data-bs-dismiss="modal">save</button>
+      </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+    </div>
+
+
+    <!-- modal to confirm delete -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-capitalize" id="deleteModalLabel">confirm delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-capitalize">
+        <p>are you sure you want to confirm delete this note?</p>
+      </div>
+      <div class="modal-footer">
+        <button (click)="confirmDeleteNote()" type="button" class="btn btn-danger text-capitalize" data-bs-dismiss="modal">confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
