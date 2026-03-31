@@ -71,3 +71,12 @@ npm install
 
 # Run the application
 ng serve
+
+# Then open
+http://localhost:4200
+
+---
+
+```md
+# 🌐 Live Demo
+https://asmaaasaid.github.io/note-app/
